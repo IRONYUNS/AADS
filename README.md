@@ -22,6 +22,6 @@ We use topic 'Incoming/Data/Random', you can change it as desired
    - SPECTxNewAADS.csv (SPECT) [2]
 
 Reference
-[1] S. Rayana, “ODDS Library,” 2016. http://odds.cs.stonybrook.edu/
-[2] A. Asuncion and D. Newman, “UCI machine learning repository,” 2007
+1) S. Rayana, “ODDS Library,” 2016. http://odds.cs.stonybrook.edu/
+2) A. Asuncion and D. Newman, “UCI machine learning repository,” 2007
  
