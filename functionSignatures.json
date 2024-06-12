@@ -1,0 +1,69 @@
+{
+"mqtt":
+{
+    "inputs":
+    [
+        {"name":"Broker",           "kind":"required",  "type": "char" },
+        {"name":"Port",             "kind":"namevalue", "type": "numeric"},
+        {"name":"Username",         "kind":"namevalue", "type": "char"},
+        {"name":"Password",         "kind":"namevalue", "type": "char"},
+        {"name":"ClientID",         "kind":"namevalue", "type": "char"},
+        {"name":"Timeout",          "kind":"namevalue", "type": "char"},
+        {"name":"CAFile",           "kind":"namevalue", "type": "char"},
+        {"name":"ClientCertificate","kind":"namevalue", "type": "char"},
+        {"name":"ClientKeyFile",    "kind":"namevalue", "type": "char"},
+        {"name":"SSLPassphrase",    "kind":"namevalue", "type": "char"}
+    ]
+    
+},
+
+"mqttio.Mqtt.subscribe":
+{
+    "inputs":
+    [
+        {"name":"mqttObj",          "kind":"required", "type":"mqtt.Mqtt" },
+        {"name":"Topic",            "kind":"required", "type":"char"},
+        {"name":"Callback",         "kind":"namevalue", "type":"char"},
+        {"name":"QoS",              "kind":"namevalue", "type":"numeric"},
+        {"name":"Timeout",          "kind":"namevalue", "type":"numeric"}        
+    ]
+},
+
+"mqttio.Mqtt.publish":
+{
+    "inputs":
+    [
+        {"name":"mqttObj",      "kind":"required", "type":"mqtt.Mqtt" },
+        {"name":"Topic",            "kind":"required", "type":"char"},
+        {"name":"Message",          "kind":"required", "type":"char"},
+        {"name":"QoS",              "kind":"namevalue", "type":"numeric"},
+        {"name":"Retain",           "kind":"namevalue", "type":"logical"},
+        {"name":"Timeout",          "kind":"namevalue", "type":"numeric"}
+    ]    
+},
+
+"mqttio.MqttSubscription.read":
+{
+    "inputs":
+    [
+        {"name":"mqttObj",      "kind":"required", "type":"mqtt.Mqtt"}
+    ]
+},
+
+"mqttio.MqttSubscription.readall":
+{
+    "inputs":
+    [
+        {"name":"mqttObj",      "kind":"required", "type":"mqtt.Mqtt"}
+    ]
+},
+
+"mqttio.MqttSubscription.unsubscribe":
+{
+    "inputs":
+    [
+        {"name":"mqttObj",      "kind":"required", "type":"mqtt.Mqtt"}
+    ]
+}
+
+}
