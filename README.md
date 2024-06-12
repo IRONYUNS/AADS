@@ -1,5 +1,4 @@
-# AADS
-Autonomous Anomaly Detection for Streaming Data
+# Autonomous Anomaly Detection for Streaming Data (AADS)
 
 AADSonlineV2.m is the main file that run the algorithm
 
