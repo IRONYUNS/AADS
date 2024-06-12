@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addonCore>
+  <label>MQTT in MATLAB</label>
+  <version>1.4</version>
+  <type>Toolbox</type>
+  <identifier>0c1ba6d2-bfa5-495d-9fbf-88067f66f2e3</identifier>
+  <summary>Connect to MQTT brokers and publish/subscribe to topics on the broker.</summary>
+  <description>Connect to MQTT compliant brokers over TCP or websocket protocols. After connection, subscribe to topics or wildcards on the broker. Define custom functions to evaluate on receiving messages on subscribed topics. Publish messages to topics on the broker. All QoS levels supported for both publish and subscribe functions. 
+
+You can also establish a secure connection to a broker using TLS v1.2 over both TCP and websocket.</description>
+  <createdBy name="MathWorks Internet of Things Team"/>
+  <image>resources/screenshot.png</image>
+</addonCore>

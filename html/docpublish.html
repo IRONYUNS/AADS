@@ -1,0 +1,170 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>publish</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-08-15"><meta name="DC.source" content="docpublish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>publish</h1><!--introduction--><p>Publish data using an MQTT connection</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Examples</a></li><li><a href="#6">Input Arguments</a></li><li><a href="#7">Output Arguments</a></li><li><a href="#8">Name-Value Pair Arguments</a></li><li><a href="#10">See Also</a></li></ul></div><h2 id="1">Syntax</h2><p><tt>publish(mqtt,topic,message)</tt></p><p><tt>publish(__,Name,Value)</tt></p><h2 id="2">Description</h2><p><tt>publish(mqtt,topic,message)</tt> publishes a message to <tt>topic</tt> in MQTT connection.</p><p><tt>publish(__,Name,Value)</tt> uses additional options specified by one or more Name, Value pair arguments.</p><h2 id="3">Examples</h2><p>Publish Message on MQTT broker</p><pre class="codeinput"><span class="comment">%Create mqtt connection.</span>
+myMQTT=mqtt(<span class="string">'tcp://broker.hivemq.com'</span>);
+
+<span class="comment">%Create topic and message.</span>
+topic=<span class="string">'myDevices'</span>;
+message=<span class="string">"Door1 is open"</span>;
+
+<span class="comment">%Publish a message to a topic.</span>
+publish(myMQTT,topic,message);
+</pre><p>Publish with QoS 2</p><pre class="codeinput">publish(myMQTT,topic,message,<span class="string">'QoS'</span>,2);
+</pre><h2 id="6">Input Arguments</h2><p><tt>mqtt</tt> - Input MQTT connection, specified as a the mqtt object used to publish</p><p><tt>topic</tt> - MQTT topic to use for publication specified as a string or character array</p><p><tt>message</tt> - message to publish to a topic using MQTT specified as a string</p><h2 id="7">Output Arguments</h2><p>none</p><h2 id="8">Name-Value Pair Arguments</h2><p>Specify optional comma-separated pairs of <tt>Name,Value</tt> arguments. <tt>Name</tt> is the argument name and <tt>Value</tt> is the corresponding value. <tt>Name</tt> must appear inside single quotes (' '). You can specify several name and value pair arguments in any order as <tt>Name1,Value1,...,NameN,ValueN</tt> .</p><p>Use <tt>Name,Value</tt> arguments to specify parameter initial values and additional properties of <tt>publish</tt> function during model creation.</p><p>
+<table cellpadding="4" cellspacing="0" width="100%">
+	<tbody>
+      <tr valign="top">
+          <td><p><tt>'QoS'</tt></p></td>
+          <td><p>Quality of Service (QoS) parameter, specified as a comma-separated pair consisting of <tt>'QoS'</tt> and an integer value.  The three levels indicate that a message will be delivered: <br>&bull; (0) at most once,<br>&bull; (1) at least once,<br>&bull; (2) exactly once.</p><p><b>Example:</b> <tt>publish(mqtt,topic,message,'QoS',1);</tt></p></td>
+      </tr>
+      <tr valign="top">
+          <td><p><tt>'Retain'</tt></p></td>
+          <td><p>Boolean or numeric equivalent indicating that the broker should retain the message for any new subscriber to the topic, specified as a comma-separated pair consisting of <tt>'Retain'</tt> and a boolean value. </p><p><b>Example:</b> <tt>publish(myMQTT,'myTopic',message,'Retain',true);</tt></p></td>
+      </tr>
+      <tr valign="top">
+          <td><p><tt>'Timeout'</tt></p></td>
+          <td><p>Waiting time in seconds to complete a publish operation, specified as a comma-separated pair consisting of <tt>'Timeout'</tt> and an integer value.</p><p><b>Example: </b><tt>publish(myMQTT,myTopic,'Timeout',10);</tt></p></td>
+      </tr>
+  </tbody>
+</table>
+</p><h2 id="10">See Also</h2><p>|<a href="docMQTT.html">mqtt</a> | <a href="docsubscribe.html">subscribe</a> | <a href="docread.html">read</a> | <a href="docreadall.html">readall</a> | <a href="docunsubscribe.html">unsubscribe</a></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% publish
+% Publish data using an MQTT connection
+%% Syntax
+% |publish(mqtt,topic,message)|
+%
+% |publish(____,Name,Value)|
+%% Description
+% |publish(mqtt,topic,message)| publishes a message to |topic| in MQTT
+% connection.
+%
+% |publish(____,Name,Value)| uses additional options
+% specified by one or more Name, Value pair arguments.
+%% Examples
+% 
+% Publish Message on MQTT broker
+%
+%%
+%Create mqtt connection.
+myMQTT=mqtt('tcp://broker.hivemq.com');
+
+%Create topic and message.
+topic='myDevices';
+message="Door1 is open";
+
+%Publish a message to a topic.
+publish(myMQTT,topic,message);
+
+%%
+% Publish with QoS 2
+%
+publish(myMQTT,topic,message,'QoS',2);
+
+%% Input Arguments
+% |mqtt| - Input MQTT connection, specified as a the mqtt object used to
+% publish
+%
+% |topic| - MQTT topic to use for publication specified as a string or
+% character array
+%
+% |message| - message to publish to a topic using MQTT specified as a
+% string
+%
+%% Output Arguments
+% none
+%% Name-Value Pair Arguments
+% Specify optional comma-separated pairs of |Name,Value| arguments. |Name| is the argument name and |Value| is the corresponding value. |Name| must appear inside single quotes (' '). You can specify several name and value pair arguments in any order as |Name1,Value1,...,NameN,ValueN| .
+%
+% Use |Name,Value| arguments to specify parameter initial values and additional properties of |publish| function during model creation.
+%%
+% <html>
+% <table cellpadding="4" cellspacing="0" width="100%">
+% 	<tbody>
+%       <tr valign="top">
+%           <td><p><tt>'QoS'</tt></p></td>
+%           <td><p>Quality of Service (QoS) parameter, specified as a comma-separated pair consisting of <tt>'QoS'</tt> and an integer value.  The three levels indicate that a message will be delivered: <br>&bull; (0) at most once,<br>&bull; (1) at least once,<br>&bull; (2) exactly once.</p><p><b>Example:</b> <tt>publish(mqtt,topic,message,'QoS',1);</tt></p></td>
+%       </tr>
+%       <tr valign="top">
+%           <td><p><tt>'Retain'</tt></p></td>
+%           <td><p>Boolean or numeric equivalent indicating that the broker should retain the message for any new subscriber to the topic, specified as a comma-separated pair consisting of <tt>'Retain'</tt> and a boolean value. </p><p><b>Example:</b> <tt>publish(myMQTT,'myTopic',message,'Retain',true);</tt></p></td>
+%       </tr>
+%       <tr valign="top">
+%           <td><p><tt>'Timeout'</tt></p></td>
+%           <td><p>Waiting time in seconds to complete a publish operation, specified as a comma-separated pair consisting of <tt>'Timeout'</tt> and an integer value.</p><p><b>Example: </b><tt>publish(myMQTT,myTopic,'Timeout',10);</tt></p></td>
+%       </tr> 
+%   </tbody>
+% </table>
+% </html>
+%% See Also
+%%
+% |<docMQTT.html mqtt> | <docsubscribe.html subscribe> | <docread.html
+% read> | <docreadall.html readall> | <docunsubscribe.html unsubscribe> 
+##### SOURCE END #####
+--></body></html>

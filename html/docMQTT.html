@@ -1,0 +1,342 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MQTT in MATLAB</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-08-30"><meta name="DC.source" content="docMQTT.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>MQTT in MATLAB</h1><!--introduction--><p>Create connection to a broker for communication using MQTT protocol</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Examples</a></li><li><a href="#8">Input Arguments</a></li><li><a href="#9">Name-Value Pair Arguments</a></li><li><a href="#11">Object Functions</a></li><li><a href="#12">Output Arguments</a></li><li><a href="#13">See Also</a></li></ul></div><h2 id="1">Syntax</h2><p><tt>M = mqtt(BrokerAddress)</tt></p><p><tt>M = mqtt(_,Name,Value)</tt></p><h2 id="2">Description</h2><p><tt>M = mqtt(BrokerAddress)</tt> create a new MQTT connection to a broker at <tt>BrokerAddress</tt></p><p><tt>M = mqtt(_,Name,Value)</tt> uses additional options specified by one or more Name, Value pair arguments</p><h2 id="3">Examples</h2><p>MQTT Connection</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'tcp://broker.hivemq.com'</span>)
+
+myMQTT =
+
+
+Mqtt <span class="string">with</span> <span class="string">properties:</span>
+
+    BrokerAddress: <span class="string">'tcp://broker.hivemq.com'</span>
+             Port: 1883
+         ClientID: <span class="string">""</span>
+          Timeout: 5
+        Connected: 1
+        KeepAlive: 60
+</pre><p>MQTT Connection with ClientID myClient at Port 1883</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'tcp://broker.hivemq.com'</span>,<span class="string">'ClientID'</span>,<span class="string">'myClient'</span>,<span class="string">'Port'</span>,1883)
+
+myMQTT =
+
+Mqtt <span class="string">with</span> <span class="string">properties:</span>
+
+    BrokerAddress: <span class="string">'tcp://broker.hivemq.com'</span>
+             Port: 1883
+         ClientID: <span class="string">'myClient'</span>
+          Timeout: 5
+        Connected: 1
+        KeepAlive: 60
+</pre><p>MQTT Connection with SSL</p><pre class="codeinput">myMQTT = mqtt(<span class="string">'ssl://mosquitto.org'</span>,<span class="string">'Port'</span>,8884, <span class="keyword">...</span>
+    <span class="string">'CAFile'</span>, <span class="string">'C:\mosquitto.org.pem'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientCertificate'</span>, <span class="string">'C:\client.crt'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientKeyFile'</span>, <span class="string">'C:\client.key'</span>);
+</pre><p>MQTT Connection with WSS</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'wss://mqtt.thingspeak.com'</span>,<span class="string">'Port'</span>,443)
+</pre><h2 id="8">Input Arguments</h2><p><tt>BrokerAddress</tt> - Host name or IP address of the MQTT broker, specified as a string or character array including connection protocol.  Supported protocols include TCP, WS, SSL, and WSS</p><h2 id="9">Name-Value Pair Arguments</h2><p>Specify optional comma-separated pairs of <tt>Name,Value</tt> arguments. <tt>Name</tt> is the argument name and <tt>Value</tt> is the corresponding value. <tt>Name</tt> must appear inside single quotes (' '). You can specify several name and value pair arguments in any order as <tt>Name1,Value1,...,NameN,ValueN</tt> .</p><p>Use <tt>Name,Value</tt> arguments to specify parameter initial values and additional properties of <tt>mqtt</tt> connection during creation.</p><p>Note: All mqtt connections are made as a clean session, where the broker does not remember any previous subscriptions by the client.</p><p>
+<table cellpadding="4" cellspacing="0" width="100%">
+	<tbody>
+      <tr valign="top">
+          <td><p><tt>'Port'</tt></p></td>
+          <td><p>Socket port number to use when connecting to the MQTT broker, specified as a comma-separated pair consisting of 'Port" and the port number. </p><p><b>Example:</b> <tt>myMQTT=mqtt('tcp://mqtt.thingspeak.com', 'Port',1883)</tt></p></td>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'Username'</tt></p></td>
+          <td><p><tt>Username</tt> to use when connecting to the MQTT broker, specified as a comma-separated pair consisting of 'Username' and a character vector.  If the Username parameter is not supplied, the connection is made without a user name. </p><p><b>Example:</b> <tt>myMQTT= mqtt('tcp://mqtt.thingspeak.com','Username','myName')</tt></p></td>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'Password'</tt></p></td>
+          <td><p><tt>Password</tt> to use when connecting to MQTT broker, specified as a comma-separated pair consisting of 'Password' and a character vector. If the Password parameter is not supplied, the connection is made without a password.    </p><p><b>Example:</b> <tt>myMQTT= mqtt('tcp://mqtt.thingspeak.com','Username','myName','Password','myPWD')</tt></p></td>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'ClientID'</tt></p></td>
+          <td><p>A MQTT identifier that identifies the client to the broker, specified as a comma-separated pair consisting of <tt>'ClientID'</tt> and a character vector. The broker uses this ID to identify the client and the current state of the client.</p><p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com','ClientID','NameofClient');</tt></p>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'Timeout'</tt></p></td>
+          <td><p>Waiting time in seconds to complete a connection, specified as <tt>'Timeout'</tt> and a numeric value. <p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com,'Timeout',5);</tt></p>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'KeepAlive'</tt></p></td>
+          <td><p>Longest time connection will persist without sending a message, specified as a comma-separated pair consisting of <tt>'KeepAlive'</tt> and and a positive integer in seconds.<p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com,'KeepAlive',60);</tt></p>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'CAFile'</tt></p></td>
+          <td><p>Path to Root Certificate specified as <tt>'CAFile'</tt> and a path and file name. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> <tt>myMQTT=mqtt('wss://mosquito.org','Port', 883,'CAFile','C:\CertFiles\mosquitto.org.crt')</tt></p>
+          <p>NOTE: You can generally obtain the CA file from the broker
+          directly.  For example, you can find information on how to obtain client certification information from mosquitto.org <a href="http://test.mosquitto.org/">here</a>.
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'ClientCertificate'</tt></p></td>
+          <td><p>Path to client certificate, specified
+          as<tt>'ClientCertificate'</tt> and a file path and location.
+          Learn more about <a href="docsecurity.html">Secure
+          Connections</a>. <p><b>Example:</b>
+          myMQTT=mqtt('wss://mosquito.org','Port',883,'ClientCertificate',
+          'C:\CertFiles\client.pem')</tt></p>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'ClientKeyFile'</tt></p></td>
+          <td><p>Client Key file <tt>'ClientKeyFile'</tt> and a file location. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> myMQTT=mqtt('wss://mosquito.org','Port',883,'ClientCertificate','C:\CertFiles\client.pem','ClientKeyFile', 'C:\CertFiles\client.key')</tt></p>
+      </tr>
+       <tr valign="top">
+          <td><p><tt>'SSLPassword'</tt></p></td>
+          <td><p>Password for SSL certificate <tt>'SSLPassword'</tt> and a password. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> <tt>myMQTT=mqtt('wss://mosquito.org','Port', 883,'ClientCertificate','C:\CertFiles\client.pem','ClientKeyFile','C:\CertFiles\client.key','SSLPassword','12345')</tt></p>
+      </tr>
+  </tbody>
+</table>
+</p><h2 id="11">Object Functions</h2><p><tt>mqtt</tt> object functions include:</p><p>
+<table cellpadding="1" cellspacing="0" width="100%">
+	<tbody>
+      <tr valign="top">
+          <td><p><tt><a href="docsubscribe.html">subscribe</a></tt></p></td>
+          <td><p>Subscribe to a topic on MQTT broker</p></td>
+      </tr>
+      <tr valign="top">
+          <td><p><tt><a href="docpublish.html">publish</a></tt></p></td>
+          <td><p>Publish a message to MQTT broker</p></td>
+      </tr>
+      <tr valign="top">
+          <td><p><tt><a href="docunsubscribeAll.html">unsubscribeAll</a></tt></p></td>
+          <td><p>Unsubscribe from all topics on MQTT broker</p></td>
+      </tr>
+  </tbody>
+</table>
+</p><h2 id="12">Output Arguments</h2><p><tt>mqtt</tt> object. After creating the <tt>mqtt</tt> object, you can use dot notation to access or change its property values.</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'tcp://broker.hivemq.com'</span>)
+
+ Mqtt <span class="string">with</span> <span class="string">properties:</span>
+
+   BrokerAddress: <span class="string">'tcp://broker.hivemq.com'</span>
+            Port: 1883
+        ClientID: <span class="string">""</span>
+         Timeout: 5
+       Connected: 1
+       KeepAlive: 60
+</pre><h2 id="13">See Also</h2><p>| <a href="docsecurity.html">security</a> | <a href="docpublish.html">publish</a> | <a href="docsubscribe.html">subscribe</a> | <a href="docread.html">read</a> | <a href="docreadall.html">readall</a> | <a href="docunSubscribeAll.html">unSubscribeAll</a> | <a href="docunsubscribe.html">unsubscribe</a> |</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div>
+<!--
+##### SOURCE BEGIN #####
+%% MQTT in MATLAB
+% Create connection to a broker for communication using MQTT protocol
+%% Syntax
+% |M = mqtt(BrokerAddress)|
+%
+% |M = mqtt(___,Name,Value)|
+%% Description
+% |M = mqtt(BrokerAddress)| create a new MQTT connection to a broker at
+% |BrokerAddress|
+%
+% |M = mqtt(___,Name,Value)| uses additional options
+% specified by one or more Name, Value pair arguments
+%% Examples
+% 
+%%
+% 
+% MQTT Connection
+myMQTT=mqtt('tcp://broker.hivemq.com')
+
+myMQTT =
+
+
+Mqtt with properties:
+
+    BrokerAddress: 'tcp://broker.hivemq.com'
+             Port: 1883
+         ClientID: ""
+          Timeout: 5
+        Connected: 1
+        KeepAlive: 60
+%%
+% MQTT Connection with ClientID myClient at Port 1883
+myMQTT=mqtt('tcp://broker.hivemq.com','ClientID','myClient','Port',1883)
+
+myMQTT = 
+
+Mqtt with properties:
+
+    BrokerAddress: 'tcp://broker.hivemq.com'
+             Port: 1883
+         ClientID: 'myClient'
+          Timeout: 5
+        Connected: 1
+        KeepAlive: 60
+%%
+% MQTT Connection with SSL
+myMQTT = mqtt('ssl://mosquitto.org','Port',8884, ...
+    'CAFile', 'C:\mosquitto.org.pem',...
+    'ClientCertificate', 'C:\client.crt',...
+    'ClientKeyFile', 'C:\client.key');
+%%
+% MQTT Connection with WSS
+myMQTT=mqtt('wss://mqtt.thingspeak.com','Port',443)        
+%% Input Arguments
+% |BrokerAddress| - Host name or IP address of the MQTT broker, specified
+% as a string or character array including connection protocol.  Supported
+% protocols include TCP, WS, SSL, and WSS
+%
+%% Name-Value Pair Arguments
+% Specify optional comma-separated pairs of |Name,Value| arguments. |Name| is the argument name and |Value| is the corresponding value. |Name| must appear inside single quotes (' '). You can specify several name and value pair arguments in any order as |Name1,Value1,...,NameN,ValueN| .
+%
+% Use |Name,Value| arguments to specify parameter initial values and additional properties of |mqtt| connection during creation.
+
+%%
+% Note: All mqtt connections are made as a clean session, where the broker does
+% not remember any previous subscriptions by the client.
+%
+% <html>
+% <table cellpadding="4" cellspacing="0" width="100%">
+% 	<tbody>
+%       <tr valign="top">
+%           <td><p><tt>'Port'</tt></p></td>
+%           <td><p>Socket port number to use when connecting to the MQTT broker, specified as a comma-separated pair consisting of 'Port" and the port number. </p><p><b>Example:</b> <tt>myMQTT=mqtt('tcp://mqtt.thingspeak.com', 'Port',1883)</tt></p></td>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'Username'</tt></p></td>
+%           <td><p><tt>Username</tt> to use when connecting to the MQTT broker, specified as a comma-separated pair consisting of 'Username' and a character vector.  If the Username parameter is not supplied, the connection is made without a user name. </p><p><b>Example:</b> <tt>myMQTT= mqtt('tcp://mqtt.thingspeak.com','Username','myName')</tt></p></td>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'Password'</tt></p></td>
+%           <td><p><tt>Password</tt> to use when connecting to MQTT broker, specified as a comma-separated pair consisting of 'Password' and a character vector. If the Password parameter is not supplied, the connection is made without a password.    </p><p><b>Example:</b> <tt>myMQTT= mqtt('tcp://mqtt.thingspeak.com','Username','myName','Password','myPWD')</tt></p></td>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'ClientID'</tt></p></td>
+%           <td><p>A MQTT identifier that identifies the client to the broker, specified as a comma-separated pair consisting of <tt>'ClientID'</tt> and a character vector. The broker uses this ID to identify the client and the current state of the client.</p><p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com','ClientID','NameofClient');</tt></p>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'Timeout'</tt></p></td>
+%           <td><p>Waiting time in seconds to complete a connection, specified as <tt>'Timeout'</tt> and a numeric value. <p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com,'Timeout',5);</tt></p>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'KeepAlive'</tt></p></td>
+%           <td><p>Longest time connection will persist without sending a message, specified as a comma-separated pair consisting of <tt>'KeepAlive'</tt> and and a positive integer in seconds.<p><b>Example:</b> <tt>myMQTT = mqtt('tcp://mqtt.thingspeak.com,'KeepAlive',60);</tt></p>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'CAFile'</tt></p></td>
+%           <td><p>Path to Root Certificate specified as <tt>'CAFile'</tt> and a path and file name. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> <tt>myMQTT=mqtt('wss://mosquito.org','Port', 883,'CAFile','C:\CertFiles\mosquitto.org.crt')</tt></p>
+%           <p>NOTE: You can generally obtain the CA file from the broker
+%           directly.  For example, you can find information on how to obtain client certification information from mosquitto.org <a href="http://test.mosquitto.org/">here</a>.
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'ClientCertificate'</tt></p></td>
+%           <td><p>Path to client certificate, specified
+%           as<tt>'ClientCertificate'</tt> and a file path and location.
+%           Learn more about <a href="docsecurity.html">Secure
+%           Connections</a>. <p><b>Example:</b>
+%           myMQTT=mqtt('wss://mosquito.org','Port',883,'ClientCertificate',
+%           'C:\CertFiles\client.pem')</tt></p>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'ClientKeyFile'</tt></p></td>
+%           <td><p>Client Key file <tt>'ClientKeyFile'</tt> and a file location. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> myMQTT=mqtt('wss://mosquito.org','Port',883,'ClientCertificate','C:\CertFiles\client.pem','ClientKeyFile', 'C:\CertFiles\client.key')</tt></p>
+%       </tr>
+%        <tr valign="top">
+%           <td><p><tt>'SSLPassword'</tt></p></td>
+%           <td><p>Password for SSL certificate <tt>'SSLPassword'</tt> and a password. Learn more about <a href="docsecurity.html">Secure Connections</a>.<p><b>Example:</b> <tt>myMQTT=mqtt('wss://mosquito.org','Port', 883,'ClientCertificate','C:\CertFiles\client.pem','ClientKeyFile','C:\CertFiles\client.key','SSLPassword','12345')</tt></p>
+%       </tr>
+%   </tbody>
+% </table>
+% </html>
+%% Object Functions
+% |mqtt| object functions include:
+%
+% <html>
+% <table cellpadding="1" cellspacing="0" width="100%">
+% 	<tbody>
+%       <tr valign="top">
+%           <td><p><tt><a href="docsubscribe.html">subscribe</a></tt></p></td>
+%           <td><p>Subscribe to a topic on MQTT broker</p></td>
+%       </tr>
+%       <tr valign="top">
+%           <td><p><tt><a href="docpublish.html">publish</a></tt></p></td>
+%           <td><p>Publish a message to MQTT broker</p></td>
+%       </tr>
+%       <tr valign="top">
+%           <td><p><tt><a href="docunsubscribeAll.html">unsubscribeAll</a></tt></p></td>
+%           <td><p>Unsubscribe from all topics on MQTT broker</p></td>
+%       </tr>
+%   </tbody>  
+% </table>
+% </html>
+
+%% Output Arguments
+% |mqtt|
+% object. After creating the |mqtt| object, you can use dot notation to access or change its property values. 
+myMQTT=mqtt('tcp://broker.hivemq.com')
+
+ Mqtt with properties:
+
+   BrokerAddress: 'tcp://broker.hivemq.com'
+            Port: 1883
+        ClientID: ""
+         Timeout: 5
+       Connected: 1
+       KeepAlive: 60
+
+%% See Also
+%
+% | <docsecurity.html security> | <docpublish.html publish> | <docsubscribe.html subscribe> | <docread.html read> | <docreadall.html readall> | <docunSubscribeAll.html unSubscribeAll> | <docunsubscribe.html unsubscribe> | 
+
+##### SOURCE END #####
+--></body></html>

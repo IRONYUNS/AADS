@@ -1,0 +1,180 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MATLAB MQTT Security Protocols</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-08-30"><meta name="DC.source" content="docsecurity.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>MATLAB MQTT Security Protocols</h1><!--introduction--><p>MATLAB MQTT supports secure communications via TLS (Transport Layer Security) and WSS (Web Sockets Security).  TLS and its predecessor, SSL (Secure Sockets Layer) is used for transport encryption.  These protocols provide a secure way to authenticate the broker and client and exchange encrypted messages between them. MATLAB MQTT supports only TLS version 1.2. The type of security scheme a user will need to implement depends on the broker.  The following four scenarios outline the possible security requirements for an MQTT broker.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#3">Broker-Only Authentication</a></li><li><a href="#5">Broker and Client Authentication</a></li><li><a href="#8">Broker and Client Authentication with Private Key Password</a></li><li><a href="#11">Encryption Only with No Authentication</a></li><li><a href="#16">See Also</a></li></ul></div><h2 id="3">Broker-Only Authentication</h2><p>When the broker requires broker-only authentication, the user must provide proof that shows they have authenticated the broker. At account generation or device registration, the broker provides a CA root file to the client.  The root certificate is a <a href="https://en.wikipedia.org/wiki/Public_key_certificate">public key certificate</a> that identifies the root <a href="https://en.wikipedia.org/wiki/Certificate_authority">certificate authority</a> (CA), which signs the broker&#8217;s certificate. This scheme is used to authenticate the broker being connected to. The CA root certificate must be in <tt>.pem</tt> extension file format.  You can use  <a href="https://www.openssl.org/">OpenSSL</a> to convert the CA root certificate to a <tt>.pem</tt> extension file format.  The required Name, Value pairs in <tt>mqtt</tt> for broker-only authentication are 'Port' and 'CAFile'.</p><p>For example, create a TCP secured connection with CA root file:</p><pre class="codeinput">myMQTTMosquitto=mqtt(<span class="string">'ssl://mosquitto.org'</span>,<span class="string">'Port'</span>,8883,<span class="string">'CAFile'</span>,<span class="string">'C:\mosquitto.org.pem'</span>);
+</pre><h2 id="5">Broker and Client Authentication</h2><p>This type of secure connection requires both broker authentication (as in the previous example) and client authentication.  In addition to providing the CA file, the client must also provide a certificate file and a private key file representing the identity of the client. The key file and certificate file must represent the same key pair. If self-signed certificates are allowed, you can <a href="https://wiki.openssl.org/index.php/Manual:Req(1)">generate the certificate using OpenSSL commands</a>.   Externally signed certificates can be purchased from multiple vendors, including <a href="https://www.digicert.com/">DigiCert</a>. The required Name, Value pairs in <tt>mqtt</tt> for Broker and Client Authentication are 'Port','CAFile','ClientCertificate', and 'ClientKeyFile'.</p><p>The Client certificate must be a <tt>.pem</tt> extension file that contains an x.509 certificate identifying the client. The client private key is provided as a <tt>.key</tt> file that contains only the private key of the client certificate.</p><p>Create a TCP secured connection with CA root file, client certificate, and client key file:</p><pre class="codeinput">myMQTTSSL=mqtt(<span class="string">'ssl://mosquitto.org'</span>,<span class="string">'Port'</span>,8884,<span class="keyword">...</span>
+    <span class="string">'CAFile'</span>, <span class="string">'C:\mosquitto.org.pem'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientCertificate'</span>, <span class="string">'C:\client.crt'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientKeyFile'</span>, <span class="string">'C:\client.key'</span>);
+</pre><h2 id="8">Broker and Client Authentication with Private Key Password</h2><p>In this version of the secure connection, both the broker and client require authentication, and a password is required for the key file.  Broker authentication is achieved using the CA file and client authentication using the certificate file and key file. For additional security, the client certificate&#8217;s private key file is encrypted with a password.  The password must be supplied to the <tt>mqtt</tt> function using the name-value pair 'SSLPassword' and a character vector of the password. In broker and client authentication with private key password, the required Name, Value pairs in <tt>mqtt</tt> are: 'Port','CAFile','ClientCertificate','ClientKey', and 'SSLPassword'.</p><p>The Client certificate must be a <tt>.pem</tt> extension file that contains an x.509 certificate identifying the client. The client private key is provided as a &#8220;.key&#8221; file that contains only the private key of the client certificate.</p><p>Create a TCS secured connection with CA root file, client certificate, client key and password:</p><pre class="codeinput">myMQTTSSL=mqtt(<span class="string">'ssl://mosquitto.org'</span>,<span class="string">'Port'</span>,8884,<span class="keyword">...</span>
+    <span class="string">'CAFile'</span>, <span class="string">'C:\\mosquitto.org.pem'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientCertificate'</span>, <span class="string">'C:\client.crt'</span>,<span class="keyword">...</span>
+    <span class="string">'ClientKeyFile'</span>, <span class="string">'C:\client.key'</span>,<span class="keyword">...</span>
+    <span class="string">'SSLPassword'</span>, <span class="string">'m@tl@b'</span>);
+</pre><h2 id="11">Encryption Only with No Authentication</h2><p>Some brokers allow ercryption only with no authentication. Encrypted data is supplied by the server.  The user only needs to provide a secure port as indicated by the broker. This option is a weak version of SSL/TLS.  When using encryption only with no authentication, the required Name, Value pairs in <tt>mqtt</tt> for a secure connection is 'Port'.</p><p>Create a TCP secured connection without certificates or keys:</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'ssl://mqtt.thingspeak.com'</span>,<span class="string">'Port'</span>,8883)
+</pre><p>Create a WS secured connection without certificates or keys:</p><pre class="codeinput">myMQTT=mqtt(<span class="string">'wss://mqtt.thingspeak.com'</span>,<span class="string">'Port'</span>,443)
+</pre><p>Note: Asymmetric authentication where only client authentication is required is possible but rare.  MATLAB MQTT also supports this option.</p><h2 id="16">See Also</h2><p>| <a href="docmqtt.html">MQTT</a> |</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%   MATLAB MQTT Security Protocols 
+%
+% MATLAB MQTT supports secure communications via TLS (Transport Layer Security) and WSS (Web Sockets Security).  TLS and its predecessor, SSL (Secure Sockets Layer) is used for transport encryption.  These protocols provide a secure way to authenticate the broker and client and exchange encrypted messages between them. MATLAB MQTT supports only TLS version 1.2. 
+% The type of security scheme a user will need to implement depends on the broker.  The following four scenarios outline the possible security requirements for an MQTT broker.  
+
+%%
+% 
+%%
+%% Broker-Only Authentication
+%
+% When the broker requires broker-only authentication, the user must
+% provide proof that shows they have authenticated the broker. At account
+% generation or device registration, the broker provides a CA root file to
+% the client.  The root certificate is a
+% <https://en.wikipedia.org/wiki/Public_key_certificate public key
+% certificate> that identifies the root
+% <https://en.wikipedia.org/wiki/Certificate_authority certificate
+% authority> (CA), which signs the broker’s certificate. This scheme is
+% used to authenticate the broker being connected to. The CA root
+% certificate must be in |.pem| extension file format.  You can use
+%  <https://www.openssl.org/ OpenSSL> to convert the CA root certificate to a |.pem| extension file format.  The required Name, Value pairs in |mqtt| for broker-only authentication are 'Port' and
+% 'CAFile'.
+%
+% For example, create a TCP secured connection with CA root file:
+myMQTTMosquitto=mqtt('ssl://mosquitto.org','Port',8883,'CAFile','C:\mosquitto.org.pem');
+
+%%
+%% Broker and Client Authentication
+% 
+%
+% This type of secure connection requires both broker authentication (as in
+% the previous example) and client authentication.  In addition to
+% providing the CA file, the client must also provide a certificate file
+% and a private key file representing the identity of the client. The key
+% file and certificate file must represent the same key pair. If
+% self-signed certificates are allowed, you can
+% <https://wiki.openssl.org/index.php/Manual:Req(1) generate the
+% certificate using OpenSSL commands>.   Externally signed certificates can
+% be purchased from multiple vendors, including <https://www.digicert.com/
+% DigiCert>. The required Name, Value pairs in |mqtt|
+% for Broker and Client Authentication are
+% 'Port','CAFile','ClientCertificate', and 'ClientKeyFile'.
+%%
+% The Client certificate must be a |.pem| extension file that contains an
+% x.509 certificate identifying the client. 
+% The client private key is provided as a |.key| file that contains only
+% the private key of the client certificate. 
+%
+% Create a TCP secured connection with CA root file, client certificate, and client key file:
+myMQTTSSL=mqtt('ssl://mosquitto.org','Port',8884,...
+    'CAFile', 'C:\mosquitto.org.pem',...
+    'ClientCertificate', 'C:\client.crt',...
+    'ClientKeyFile', 'C:\client.key');
+
+%%
+%% Broker and Client Authentication with Private Key Password
+%
+% In this version of the secure connection, both the broker and client require authentication, and a password is required for the key file.  Broker authentication is achieved using the CA file and client authentication using the certificate file and key file. For additional security, the client certificate’s private key file is encrypted with a password.  The password must be supplied to the |mqtt| function using the name-value pair 'SSLPassword' and a character vector of the password. In broker and client
+% authentication with private key password, the required Name, Value pairs in |mqtt| are: 'Port','CAFile','ClientCertificate','ClientKey', and 'SSLPassword'.    
+%%  
+% The Client certificate must be a |.pem| extension file that contains an x.509 certificate identifying the client.
+% The client private key is provided as a “.key” file that contains only
+% the private key of the client certificate. 
+%
+% Create a TCS secured connection with CA root file, client certificate, client key and password:
+myMQTTSSL=mqtt('ssl://mosquitto.org','Port',8884,...
+    'CAFile', 'C:\\mosquitto.org.pem',...
+    'ClientCertificate', 'C:\client.crt',...
+    'ClientKeyFile', 'C:\client.key',...
+    'SSLPassword', 'm@tl@b');
+%%
+%% Encryption Only with No Authentication 
+%
+% Some brokers allow ercryption only with no authentication. Encrypted data is supplied by the server.  The user only needs to provide a secure port as
+% indicated by the broker. This option is a weak version of SSL/TLS.  When
+% using encryption only with no authentication, the required Name, Value pairs in |mqtt| for
+% a secure connection is 'Port'.
+%
+%%
+% Create a TCP secured connection without certificates or keys:
+
+myMQTT=mqtt('ssl://mqtt.thingspeak.com','Port',8883)
+
+%%
+% Create a WS secured connection without certificates or keys:
+ 
+myMQTT=mqtt('wss://mqtt.thingspeak.com','Port',443)
+
+%%
+% Note: Asymmetric authentication where only client authentication is
+% required is possible but rare.  MATLAB MQTT also supports this option.
+
+%%
+%% See Also
+% | <docmqtt.html MQTT> |
+
+##### SOURCE END #####
+--></body></html>
