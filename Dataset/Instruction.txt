@@ -1,0 +1,2 @@
+1) Upload AADS_Streaming_Data_Supplier.ipynb to google collaborative
+2) Read and follow the instruction in the uploaded file
