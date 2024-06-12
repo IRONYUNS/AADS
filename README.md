@@ -14,9 +14,9 @@ Additionally, to test the algorithm, you can run AADS_Streaming_Data_Supplier.ip
 You're not obligated to run the .ipynb file; you can create your own code to publish data to the desired topic.
 
 The provided datasets are:
-- breastw.mat (Breast Cancer Wisconsin)
-- ionosphere.mat (Ionosphere)
-- SPECTxNewAADS.csv (SPECT)
+- breastw.mat (Breast Cancer Wisconsin) [1]
+- ionosphere.mat (Ionosphere) [1]
+- SPECTxNewAADS.csv (SPECT) [2]
 
 You can identify anomaly data within the clustMember variable based on the indices stored in the anomalyclustIDX variable.
 
