@@ -1,5 +1,7 @@
 # Autonomous Anomaly Detection for Streaming Data (AADS)
 
+The published paper is in https://doi.org/10.1016/j.knosys.2023.111235
+
 AADSonlineV2.m is the main file that run the algorithm
 
 This code need
